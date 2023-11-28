@@ -1,29 +1,55 @@
 
-// import { useEffect } from 'react'
-// import './App.css'
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import WeatherDetail from "./components/WeatherDetail";
 
 function App() {
   const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState("");  // Estado para la ciudad
   const [isCelsius, setIsCelsius] = useState(true);
 
-  const success = (pos) => {
-    const { latitude, longitude } = pos.coords;
+  // Función para obtener el clima por nombre de ciudad
+  const fetchWeatherByCity = () => {
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9fcc7032cd384df1a6a7e286ca7da527&lang=es&units=metric`
+      )
+      .then(({ data }) => setWeather(data))
+      .catch((err) => console.log(err));
+  };
 
+  // Función para obtener el clima por coordenadas geográficas
+  const fetchWeatherByCoords = (latitude, longitude) => {
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=9fcc7032cd384df1a6a7e286ca7da527&lang=es&units=metric`
       )
       .then(({ data }) => setWeather(data))
       .catch((err) => console.log(err));
-  }
+  };
 
+  // Función para obtener la ubicación actual del usuario
+  const success = (pos) => {
+    const { latitude, longitude } = pos.coords;
+    fetchWeatherByCoords(latitude, longitude);
+  };
+
+  // Usar useEffect para obtener la ubicación al cargar la página
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
   }, []);
+
+  // Manejar el cambio en el campo de entrada
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  // Manejar la búsqueda cuando se presiona Enter
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      fetchWeatherByCity();
+    }
+  };
 
   const toggleTemperatureUnit = () => {
     setIsCelsius(!isCelsius);
@@ -57,7 +83,19 @@ function App() {
   const backgroundImage = bgImages[weatherIcon] || 'bg-default';
 
   return (
-    <main className={`flex justify-center items-center h-screen bg-black text-white bg-cover shadow-lg border border-gray-700  ${backgroundImage}` }>
+    <main className={`flex flex-col justify-center items-center h-screen bg-black text-white bg-cover shadow-lg border border-gray-700 ${backgroundImage}`}>
+      {/* Campo de entrada para la búsqueda de ciudad */}
+      <div className="mb-4">
+        <input
+          type="text"
+          value={city}
+          onChange={handleCityChange}
+          onKeyDown={handleSearch}
+          placeholder="Ingrese una ciudad"
+          className="p-2 border border-gray-300 rounded text-blue-600"
+        />
+      </div>
+
       {weather ? (
         <WeatherDetail
           weather={weather}
@@ -65,10 +103,10 @@ function App() {
           toggleTemperatureUnit={toggleTemperatureUnit}
         />
       ) : (
-        <span className="text-xl">Cargando...</span>
+        <span className="text-xl">Cargando el clima...</span>
       )}
     </main>
-  );}
+  );
+}
 
 export default App;
-
