@@ -83,7 +83,7 @@ function App() {
   const backgroundImage = bgImages[weatherIcon] || 'bg-default';
 
   return (
-    <main className={`flex flex-col justify-center items-center h-screen bg-black text-white bg-cover shadow-lg border border-gray-700 ${backgroundImage}`}>
+    <main className={`flex flex-col justify-center items-center h-screen bg-black text-slate-700 bg-cover shadow-lg border border-gray-700 ${backgroundImage}`}>
       {/* Campo de entrada para la búsqueda de ciudad */}
       <div className="mb-4">
         <input
