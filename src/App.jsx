@@ -68,7 +68,7 @@ function App() {
         <span className="text-xl">Cargando...</span>
       )}
     </main>
-  );
-}
+  );}
 
 export default App;
+

@@ -33,8 +33,7 @@ function WeatherDetail({ weather, isCelsius, toggleTemperatureUnit }) {
       >
         Cambiar {isCelsius ? 'a °F' : 'a °C'}
       </button>
+      
     </article>
-  );
-}
-
+  );}
 export default WeatherDetail;
