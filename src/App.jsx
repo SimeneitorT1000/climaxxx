@@ -57,7 +57,7 @@ function App() {
   const backgroundImage = bgImages[weatherIcon] || 'bg-default';
 
   return (
-    <main className={`flex justify-center items-center h-screen bg-black text-white bg-cover shadow-lg border border-gray-700 ${backgroundImage}`}>
+    <main className={`flex justify-center items-center h-screen bg-black text-white bg-cover shadow-lg border border-gray-700  ${backgroundImage}` }>
       {weather ? (
         <WeatherDetail
           weather={weather}
