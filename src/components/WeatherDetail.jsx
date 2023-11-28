@@ -6,7 +6,7 @@ function WeatherDetail({ weather, isCelsius, toggleTemperatureUnit }) {
   return (
     <span>
       <article className="text-center grid gap-4 "> 
-      <h3>{weather.name}, {weather.sys.country}</h3>
+      <h3 className="text-pink-800 text-4xl">{weather.name}, {weather.sys.country}</h3>
       <div className=" grid gap-4 sm:grid sm:grid-cols-2">
         <section className="bg-white/50 p-4 rounded-xl shadow-md grid lg:grid-cols-2 items-center">
         <h3 className="col-span-2 text-2xl text-gray-800">{weather.weather[0].description}</h3>
